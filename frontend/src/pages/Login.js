@@ -47,9 +47,12 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setApiError('');
 
-    if (!validate()) return;
+    if (!validate()) {
+      return;
+    }
 
     setLoading(true);
 
@@ -73,10 +76,10 @@ const Login = () => {
       // Navigate to home
       navigate('/home');
     } catch (error) {
+      console.error('Login error:', error);
       setApiError(
         error.response?.data?.message || 'Login failed. Please try again.'
       );
-    } finally {
       setLoading(false);
     }
   };
