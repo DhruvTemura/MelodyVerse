@@ -1,10 +1,17 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Login from '../pages/Login';
-import api from '../utils/api';
 
-// Mock the api module
-jest.mock('../utils/api');
+// Mock the api module first
+jest.mock('../utils/api', () => ({
+  __esModule: true,
+  default: {
+    post: jest.fn(),
+  },
+}));
+
+// Import the mocked api
+import api from '../utils/api';
 
 // Mock useNavigate
 const mockedNavigate = jest.fn();
